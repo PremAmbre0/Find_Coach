@@ -38,7 +38,7 @@ export default {
         }
     },
     created() {
-        this.id = this.$route.params.id;
+        this.id = this.$route.params.id;    
         this.selectedCoach = this.coaches.find(coach => coach.id == this.id);
     },
     computed: {
@@ -56,7 +56,7 @@ export default {
             return this.selectedCoach.description;
         },
         contactLink() {
-            return this.$route.path + '/' + this.id + '/contact' // /selectedCoach/cl/contact
+            return this.$route.path + '/contact' // /coaches/id/contact
         },
     }
 }

@@ -1,37 +1,46 @@
 <template>
-    <form>
-        <div class="form-control">
-            <label for="email">Your E-Mail</label>
-            <input type="email" id="email" v-model.trim="email"/>
-        </div>
-        <div class="form-control">
-            <label for="message">Message</label>
-            <textarea rows="5" id="message" v-model.trim="message"></textarea>
-        </div>
-        <p class="errors" v-if="!formIsValid">Please enter a valid email and a meaningfull message</p>
-        <div class="actions">
-            <custom-button>Send Message</custom-button>
-        </div>
-    </form>
+        <form @submit.prevent="submitForm"> 
+            <div class="form-control">
+                <label for="email">Your E-Mail</label>
+                <input type="email" id="email" v-model.trim="email" />
+            </div>
+            <div class="form-control">
+                <label for="message">Message</label>
+                <textarea rows="5" id="message" v-model.trim="message"></textarea>
+            </div>
+            <p class="errors" v-if="!formIsValid">Please enter a valid email and a meaningfull message</p>
+            <div class="actions">
+                <custom-button>Send Message</custom-button>
+            </div>
+        </form>
 </template>
 
 
 <script>
-export default{
+import { mapActions } from "vuex";
+export default {
     data() {
         return {
-            email:'',
-            message:'',
-            formIsValid:false,
+            email: '',
+            message: '',
+            formIsValid: true,
         }
     },
-    methods:{
-        submitForm(){
+    methods: {
+        ...mapActions('requests', ['contactCoach']),
+        submitForm() {
             this.formIsValid = true;
-            if(this.email === '' || !this.email.includes('@') || this.message === ''){
+            if (this.email === '' || !this.email.includes('@') || this.message === '') {
                 this.formIsValid = false;
                 return
             }
+            const newRequest = {
+                email: this.email,
+                message: this.message,
+                coachId: this.$route.params.id
+            }
+            this.contactCoach(newRequest)
+            this.$router.replace('/coaches')
         }
     }
 }

@@ -1,4 +1,4 @@
-import Vue from "vue";
+import Vue from "vue";  
 import VueRouter from "vue-router";
 import CoachDeatails from "../pages/coaches/CoachDetails.vue"
 import CoachesList from "../pages/coaches/CoachesList.vue"
@@ -16,9 +16,8 @@ const routes = [
     path: '/coaches/:id',
     component: CoachDeatails,
     props: true,
-    name: 'coachDetails',
     children: [
-      { path: 'contact', component:ContactCoach }
+      { path: '/coaches/:id/contact', component: ContactCoach } //coaches/:id/contact
     ]
   },
   { path: '/register', component: CoachRegistration },

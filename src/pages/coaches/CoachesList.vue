@@ -5,7 +5,7 @@
         </section>
         <custom-card>
             <div class="controls">
-                <custom-button mnod="outline">Refresh</custom-button>
+                <custom-button mode="outline">Refresh</custom-button>
                 <custom-button v-if="!isCoach" link to="/register">Register as Coach</custom-button>
             </div>
             <ul v-if="hasCoaches">
