@@ -7,8 +7,8 @@
                 <custom-badge v-for="area in areas" :key="area" :type="area" :title="area"></custom-badge>
             </div>
             <div class="actions">
-                <custom-button link mode="outline" to="/coaches/c1">View Details</custom-button>
-                <custom-button link to="/coaches/c1/contact">Contact</custom-button>
+                <custom-button link :to="{coachContactLink,params:{id:id}}">Contact</custom-button>
+                <custom-button link mode="outline" :to="coachDetailsLink">View Details</custom-button>
             </div>
         </li>
     </div>
