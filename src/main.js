@@ -3,9 +3,10 @@ import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
+import CustomCard from "./components/CustomComponnets/CustomCard.vue";
 
 Vue.config.productionTip = false;
-
+Vue.component('custom-card',CustomCard)
 new Vue({
   router,
   store,
