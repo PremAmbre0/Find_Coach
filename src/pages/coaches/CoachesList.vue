@@ -6,7 +6,7 @@
         <custom-card>
             <div class="controls">
                 <custom-button mnod="outline">Refresh</custom-button>
-                <custom-button link to="/register">Register as Coach</custom-button>
+                <custom-button v-if="!isCoach" link to="/register">Register as Coach</custom-button>
             </div>
             <ul v-if="hasCoaches">
                 <coach-item v-for="coach in filteredCoaches" :key="coach.id" :id="coach.id" :first-name="coach.firstName"
@@ -36,7 +36,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('coaches', ['coaches', 'hasCoaches']),
+        ...mapGetters('coaches', ['coaches', 'hasCoaches','isCoach']),
         filteredCoaches() {
             const coaches = this.coaches;
             return coaches.filter((coach) => {
