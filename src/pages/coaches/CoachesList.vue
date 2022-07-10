@@ -5,10 +5,13 @@
         </section>
         <custom-card>
             <div class="controls">
-                <custom-button mode="outline">Refresh</custom-button>
-                <custom-button v-if="!isCoach" link to="/register">Register as Coach</custom-button>
+                <custom-button mode="outline" @click="displayCoaches">Refresh</custom-button>
+                <custom-button v-if="!isCoach && !isLoading" link to="/register">Register as Coach</custom-button>
             </div>
-            <ul v-if="hasCoaches">
+            <div v-if="isLoading">
+            <custom-spinner></custom-spinner>
+            </div>
+            <ul v-else-if="haveCoaches">
                 <coach-item v-for="coach in filteredCoaches" :key="coach.id" :id="coach.id" :first-name="coach.firstName"
                     :last-name="coach.lastName" :rate="coach.hourlyRate" :areas="coach.areas"></coach-item>
             </ul>
@@ -20,7 +23,7 @@
 <script>
 import CoachItem from "../../components/coaches/CoachItem.vue";
 import CoachFilter from "../../components/coaches/CoachFilter.vue";
-import { mapGetters } from "vuex";
+import { mapGetters , mapActions} from "vuex";
 export default {
     components: {
         CoachItem,
@@ -32,8 +35,12 @@ export default {
                 frontend: true,
                 backend: true,
                 career: true
-            }
+            },
+            isLoading:false
         }
+    },
+    created(){
+        this.displayCoaches()
     },
     computed: {
         ...mapGetters('coaches', ['coaches', 'hasCoaches','isCoach']),
@@ -52,10 +59,19 @@ export default {
                 return false;
             });
         },
+        haveCoaches(){
+            return !this.isLoading && this.hasCoaches
+        }
     },
     methods: {
+        ...mapActions('coaches', ['loadCoaches']),
         setFilter(filters) {
             this.activeFilters = filters
+        },
+        async displayCoaches(){
+            this.isLoading=true;
+            await this.loadCoaches();
+            this.isLoading=false;
         }
     }
 }
