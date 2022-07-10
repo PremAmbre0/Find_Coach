@@ -7,8 +7,8 @@
                 <span v-for="area in areas" :key="area">{{ area }}</span>
             </div>
             <div class="actions">
-                <router-link to="/coaches/c1">View Details</router-link>
-                <router-link to="/coaches/c1/contact">Contact</router-link>
+                <custom-button link mode="outline" to="/coaches/c1">View Details</custom-button>
+                <custom-button link to="/coaches/c1/contact">Contact</custom-button>
             </div>
         </li>
     </div>

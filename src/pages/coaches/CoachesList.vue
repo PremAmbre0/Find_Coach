@@ -2,8 +2,8 @@
     <section class="coaches_list">
         <custom-card>
         <div class="controls">
-            <button>Refresh</button>
-            <router-link to="/register">Register as Coach</router-link>
+            <custom-button mnod="outline">Refresh</custom-button>
+            <custom-button link to="/register">Register as Coach</custom-button>
         </div>
         <ul v-if="hasCoaches">
             <coach-item v-for="coach in coaches" :key="coach.id" :id="coach.id"
@@ -18,10 +18,12 @@
 <script>
 import CoachItem from "../../components/coaches/CoachItem.vue";
 import { mapGetters } from "vuex";
+import CustomButton from "../../components/CustomComponnets/CustomButton.vue";
 export default {
     components: {
-        CoachItem
-    },
+    CoachItem,
+    CustomButton
+},
     computed: {
         ...mapGetters('coaches', ['coaches', 'hasCoaches']),
     }
