@@ -1,5 +1,10 @@
 <template>
     <section class="coaches_list">
+        <custom-dialog :show="!!error" title="An error occurred">
+            <p>
+                {{error}}
+            </p>
+        </custom-dialog>
         <section>
             <coach-filter @change-filter="setFilter"></coach-filter>
         </section>
@@ -36,7 +41,8 @@ export default {
                 backend: true,
                 career: true
             },
-            isLoading:false
+            isLoading:false,
+            error:'',
         }
     },
     created(){
@@ -70,7 +76,11 @@ export default {
         },
         async displayCoaches(){
             this.isLoading=true;
-            await this.loadCoaches();
+            try{
+                await this.loadCoaches(); 
+            }catch(error){
+                this.error = error.message || "Something went wrong!!";
+            }
             this.isLoading=false;
         }
     }

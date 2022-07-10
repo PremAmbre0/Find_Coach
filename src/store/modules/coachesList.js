@@ -71,7 +71,8 @@ const actions = {
         const response = await fetch(`https://find-coach-83bbe-default-rtdb.firebaseio.com/coaches.json`)
         const responseData = await response.json()
         if (!response.ok) {
-            // error ....
+            const error = new Error(responseData.message || "Failed to Fetch!");
+            throw error;
         }
         const coaches = []
 
