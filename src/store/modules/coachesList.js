@@ -1,3 +1,5 @@
+
+
 const state = {
     coaches: [
         {
@@ -23,7 +25,7 @@ const state = {
 }
 const getters = {
     coaches(state) {
-        return state.coaches
+        return state.coaches    
     },
     hasCoaches(state) {
         return state.coaches && state.coaches.length > 0
@@ -53,7 +55,8 @@ const actions = {
             areas: data.areas
         }
 
-        const response = await fetch(`https://find-coach-83bbe-default-rtdb.firebaseio.com/coaches/${userId}.json`, {
+        const token = context.rootGetters['auth/token'];
+        const response = await fetch(`https://find-coach-83bbe-default-rtdb.firebaseio.com/coaches/${userId}.json?auth=`+token, {
             method: 'PUT',
             body: JSON.stringify(coachData),
         })

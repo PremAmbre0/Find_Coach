@@ -2,7 +2,7 @@
     <section class="coaches_list">
         <custom-dialog :show="!!error" title="An error occurred">
             <p>
-                {{error}}
+                {{ error }}
             </p>
         </custom-dialog>
         <section>
@@ -11,14 +11,16 @@
         <custom-card>
             <div class="controls">
                 <custom-button mode="outline" @click="displayCoaches">Refresh</custom-button>
-                <custom-button v-if="!isCoach && !isLoading" link to="/register">Register as Coach</custom-button>
+                <custom-button link to="/auth" v-if="!isAuthenticated">Login</custom-button>
+                <custom-button v-if="isAuthenticated && !isCoach && !isLoading" link to="/register">Register as Coach</custom-button>
             </div>
             <div v-if="isLoading">
-            <custom-spinner></custom-spinner>
+                <custom-spinner></custom-spinner>
             </div>
             <ul v-else-if="haveCoaches">
-                <coach-item v-for="coach in filteredCoaches" :key="coach.id" :id="coach.id" :first-name="coach.firstName"
-                    :last-name="coach.lastName" :rate="coach.hourlyRate" :areas="coach.areas"></coach-item>
+                <coach-item v-for="coach in filteredCoaches" :key="coach.id" :id="coach.id"
+                    :first-name="coach.firstName" :last-name="coach.lastName" :rate="coach.hourlyRate"
+                    :areas="coach.areas"></coach-item>
             </ul>
             <h3 v-else>No Coaches Found</h3>
         </custom-card>
@@ -28,7 +30,7 @@
 <script>
 import CoachItem from "../../components/coaches/CoachItem.vue";
 import CoachFilter from "../../components/coaches/CoachFilter.vue";
-import { mapGetters , mapActions} from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
     components: {
         CoachItem,
@@ -41,15 +43,16 @@ export default {
                 backend: true,
                 career: true
             },
-            isLoading:false,
-            error:'',
+            isLoading: false,
+            error: '', 
         }
     },
-    created(){
+    created() {
         this.displayCoaches()
     },
     computed: {
-        ...mapGetters('coaches', ['coaches', 'hasCoaches','isCoach']),
+        ...mapGetters('coaches', ['coaches', 'hasCoaches', 'isCoach']),
+        ...mapGetters('auth', ['isAuthenticated']),
         filteredCoaches() {
             const coaches = this.coaches;
             return coaches.filter((coach) => {
@@ -65,7 +68,7 @@ export default {
                 return false;
             });
         },
-        haveCoaches(){
+        haveCoaches() {
             return !this.isLoading && this.hasCoaches
         }
     },
@@ -74,14 +77,14 @@ export default {
         setFilter(filters) {
             this.activeFilters = filters
         },
-        async displayCoaches(){
-            this.isLoading=true;
-            try{
-                await this.loadCoaches(); 
-            }catch(error){
+        async displayCoaches() {
+            this.isLoading = true;
+            try {
+                await this.loadCoaches();
+            } catch (error) {
                 this.error = error.message || "Something went wrong!!";
             }
-            this.isLoading=false;
+            this.isLoading = false;
         }
     }
 }

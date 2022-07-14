@@ -8,13 +8,33 @@
                 <li>
                     <router-link to="/coaches">All Coaches</router-link>
                 </li>
-                <li>
+                <li v-if="isAuthenticated">
                     <router-link to="/requests">Requests</router-link>
+                </li>
+                <li v-else>
+                    <router-link to="/auth">Log in </router-link>
+                </li>
+                <li v-if="isAuthenticated">
+                    <custom-button @click.native="logOut">LogOut</custom-button>
                 </li>
             </ul>
         </nav>
     </header>
 </template>
+
+<script>
+import { mapGetters , mapActions } from "vuex";
+
+export default {
+    computed: {
+        ...mapGetters('auth', ['isAuthenticated'])
+    },
+    methods:{
+        ...mapActions('auth', ['logOut'])
+    }
+}
+
+</script>
 
 <style scoped>
 header {

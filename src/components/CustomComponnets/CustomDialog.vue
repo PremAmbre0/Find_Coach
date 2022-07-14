@@ -12,7 +12,7 @@
             </section>
             <menu v-if="!fixed">
                 <slot name="actions">
-                    <base-button @click="tryClose">Close</base-button>
+                    <custom-button class="close" @click.native="tryClose">Close</custom-button>
                 </slot>
             </menu>
         </dialog>
@@ -95,7 +95,9 @@ menu {
     justify-content: flex-end;
     margin: 0;
 }
-
+.close{
+    cursor: pointer;
+}
 @media (min-width: 768px) {
     dialog {
         left: calc(50% - 20rem);
