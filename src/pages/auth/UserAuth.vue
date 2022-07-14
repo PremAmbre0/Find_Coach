@@ -79,6 +79,7 @@ export default {
                 else {
                     await this.signUp(actionPayload)
                 }
+                this.$router.replace('/coaches');
             } catch (err) {
                 this.error = err.message || 'Failed to authenticate, try later'
             }

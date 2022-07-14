@@ -1,5 +1,5 @@
 <template>
-  <div>  
+  <div>
     <the-header></the-header>
     <router-view />
   </div>
@@ -8,10 +8,28 @@
 
 <script>
 import TheHeader from "./components/TheHeader.vue";
+import { mapGetters, mapActions } from "vuex";
 
-export default{
-  components:{
+export default {
+  components: {
     TheHeader
+  },
+  created() {
+    this.autoLogin();
+    console.log(this.didAutoLogout)
+  },
+  computed: {
+    ...mapGetters('auth', ['didAutoLogout'])
+  },
+  methods: {
+    ...mapActions('auth', ['autoLogin'])
+  },
+  watch: {
+    didAutoLogout(currValue, oldValue) {
+      if (currValue && currValue != oldValue) {
+        this.$router.replace('/coaches');
+      }
+    }
   }
 }
 

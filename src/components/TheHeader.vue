@@ -30,7 +30,7 @@ export default {
         ...mapGetters('auth', ['isAuthenticated'])
     },
     methods:{
-        ...mapActions('auth', ['logOut'])
+        ...mapActions('auth', ['logOut']),
     }
 }
 
