@@ -4,7 +4,7 @@ const state = {
 }
 const getters = {
     requests(state, _, _2, rootGetters) {
-        const coachId = rootGetters.userId
+        const coachId = rootGetters['auth/userId']
         return state.requests.filter(req => req.coachId === coachId)
     },
     hasRequests(_, getters) {
@@ -43,7 +43,7 @@ const actions = {
         context.commit('addRequest', newRequest);
     },
     async fetchRequests(context) {
-        const coachId = context.rootGetters.userId;
+        const coachId = context.rootGetters['auth/userId'];
         const response = await fetch(`https://find-coach-83bbe-default-rtdb.firebaseio.com/requests/${coachId}.json`);
         const responseData = await response.json();
 

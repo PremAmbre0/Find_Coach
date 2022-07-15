@@ -32,7 +32,7 @@ const getters = {
     },
     isCoach(_, getters, _2, rootGetters) {
         const coaches = getters.coaches;
-        const userId = rootGetters.userId;
+        const userId = rootGetters['auth/userId'];
         return coaches.some(coach => coach.id === userId)
     }
 }
@@ -46,7 +46,7 @@ const mutations = {
 }
 const actions = {
     async registerCoach(context, data) {
-        const userId = context.rootGetters.userId;
+        const userId = context.rootGetters['auth/userId'];
         const coachData = {
             firstName: data.first,
             lastName: data.last,

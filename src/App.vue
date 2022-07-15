@@ -16,7 +16,6 @@ export default {
   },
   created() {
     this.autoLogin();
-    console.log(this.didAutoLogout)
   },
   computed: {
     ...mapGetters('auth', ['didAutoLogout'])
@@ -27,7 +26,9 @@ export default {
   watch: {
     didAutoLogout(currValue, oldValue) {
       if (currValue && currValue != oldValue) {
-        this.$router.replace('/coaches');
+        if (this.$router.path !== '/coaches') {
+          this.$router.push('/coaches')
+        }
       }
     }
   }

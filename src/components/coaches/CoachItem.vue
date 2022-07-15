@@ -7,7 +7,7 @@
                 <custom-badge v-for="area in areas" :key="area" :type="area" :title="area"></custom-badge>
             </div>
             <div class="actions">
-                <custom-button link :to="coachContactLink">Contact</custom-button>
+                <custom-button v-if="!isCoach || !registeredCoach" link :to="coachContactLink">Contact</custom-button>
                 <custom-button link mode="outline" :to="coachDetailsLink">View Details</custom-button>
             </div>
         </li>
@@ -15,9 +15,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
     props: ['id', 'firstName', 'lastName', 'rate', 'areas'],
     computed: {
+        ...mapGetters('coaches', ['isCoach']),
+        ...mapGetters('auth', ['userId']),
         fullName() {
             return this.firstName + ' ' + this.lastName;
         },
@@ -26,7 +29,13 @@ export default {
         },
         coachDetailsLink() {
             return this.$route.path + '/' + this.id; // /coaches/c1
+        },
+        registeredCoach(){
+            return this.id == this.userId
         }
+    },
+    mounted(){
+        console.log(this.registeredCoach)
     }
 }
 
