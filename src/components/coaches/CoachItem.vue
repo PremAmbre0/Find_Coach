@@ -34,9 +34,6 @@ export default {
             return this.id == this.userId
         }
     },
-    mounted(){
-        console.log(this.registeredCoach)
-    }
 }
 
 </script>

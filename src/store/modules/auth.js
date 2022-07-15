@@ -108,7 +108,7 @@ const actions = {
 
         const expiresIn = +tokenExpiration - new Date().getTime();
 
-        if (expiresIn > 0) {
+        if (expiresIn < 0) {
             return
         }
 
@@ -118,6 +118,7 @@ const actions = {
 
 
         if (token && userId) {
+            console.log(token,userId)
             context.commit('setUser', {
                 token: token,
                 userId: userId,

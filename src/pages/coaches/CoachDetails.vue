@@ -2,8 +2,12 @@
     <div>
         <section>
             <custom-card>
-            <h2>{{fullName}}</h2>
-            <h3>${{rate}}/hour</h3>
+                <custom-button @click.native="updateCoach('prev')" mode="outline" :isDisabled="nextDisabled">prev
+                </custom-button>
+                <custom-button @click.native="updateCoach('next')" mode="outline" :isDisabled="prevDisabled">next
+                </custom-button>
+                <h2>{{ fullName }}</h2>
+                <h3>${{ rate }}/hour</h3>
             </custom-card>
         </section>
         <section>
@@ -29,16 +33,17 @@ import { mapGetters } from 'vuex';
 
 export default {
     porps: {
-        id:Object
+        id: Object,
     },
     data() {
         return {
             selectedCoach: null,
-            id:null,
+            id: null,
         }
+
     },
     created() {
-        this.id = this.$route.params.id;    
+        this.id = this.$route.params.id;
         this.selectedCoach = this.coaches.find(coach => coach.id == this.id);
     },
     computed: {
@@ -46,18 +51,46 @@ export default {
         fullName() {
             return this.selectedCoach.firstName + ' ' + this.selectedCoach.lastName;
         },
-        areas(){
+        areas() {
             return this.selectedCoach.areas;
         },
-        rate(){
+        rate() {
             return this.selectedCoach.hourlyRate;
         },
-        description(){
+        description() {
             return this.selectedCoach.description;
         },
         contactLink() {
             return this.$route.path + '/contact' // /coaches/id/contact
         },
+        nextDisabled(){
+            if(this.coaches.indexOf(this.selectedCoach) === 0){
+                return true
+            }else{
+                return false
+            }
+        },
+        prevDisabled(){
+            if(this.coaches.indexOf(this.selectedCoach) === this.coaches.length-1){
+                return true
+            }else{
+                return false
+            }
+        }
+    },
+    methods: {
+        updateCoach(action) {
+            let currentIndex = this.coaches.indexOf(this.selectedCoach)
+            let lastIndex = this.coaches.length - 1
+            if (action === 'next' && currentIndex < lastIndex) {
+                currentIndex += 1
+                this.selectedCoach = this.coaches[currentIndex]
+            }
+            if (action == 'prev' && currentIndex > 0) {
+                currentIndex -= 1
+                this.selectedCoach = this.coaches[currentIndex]
+            }
+        }
     }
 }
 

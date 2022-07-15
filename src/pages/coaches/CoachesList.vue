@@ -1,6 +1,6 @@
 <template>
     <section class="coaches_list">
-        <custom-dialog :show="!!error" title="An error occurred">
+        <custom-dialog :show="!!error" @close="handleError" title="An error occurred">
             <p>
                 {{ error }}
             </p>
@@ -85,6 +85,9 @@ export default {
                 this.error = error.message || "Something went wrong!!";
             }
             this.isLoading = false;
+        },
+        handleError(){
+            this.erroer =null
         }
     }
 }

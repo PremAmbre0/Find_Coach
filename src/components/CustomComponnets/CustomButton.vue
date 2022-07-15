@@ -1,5 +1,5 @@
 <template>
-    <button v-if="!link" :class="mode">
+    <button v-if="!link" :class="{mode ,disabled:isDisabled}" >
         <slot></slot>
     </button>
     <router-link v-else :to="to" :class="mode">
@@ -23,6 +23,10 @@ export default {
             type: [String,Object],
             required: false,
             default: "/"
+        },
+        isDisabled:{
+            type:Boolean,
+            default: false
         }
     }
 }
@@ -62,7 +66,17 @@ button:active {
     border-color: #270041;
     color: #270041;
 }
-
+.disabled{
+    cursor:not-allowed;
+    background-color: #efeaf2;
+    color:#888;
+    border: #888;
+}
+.disabled:hover{
+    background-color: #efeaf2;
+    color:#888;
+    border: #888;
+}
 .flat:hover,
 .flat:active,
 .outline:hover,

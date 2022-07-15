@@ -16,6 +16,8 @@ export default {
   },
   created() {
     this.autoLogin();
+    console.log('created')
+    window.addEventListener('unload',()=>this.$forceUpdate())
   },
   computed: {
     ...mapGetters('auth', ['didAutoLogout'])
