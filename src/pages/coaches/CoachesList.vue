@@ -10,7 +10,7 @@
         </section>
         <custom-card>
             <div class="controls">
-                <custom-button mode="outline" @click="displayCoaches">Refresh</custom-button>
+                <custom-button mode="outline" @click.native="displayCoaches">Refresh</custom-button>
                 <custom-button link to="/auth" v-if="!isAuthenticated">Login</custom-button>
                 <custom-button v-if="isAuthenticated && !isCoach && !isLoading" link to="/register">Register as Coach</custom-button>
             </div>

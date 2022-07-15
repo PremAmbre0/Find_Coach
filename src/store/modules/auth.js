@@ -91,7 +91,7 @@ const actions = {
     logOut(context) {
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
-        localStorage.removeItem('token Expiration');
+        localStorage.removeItem('tokenexpiration');
 
         clearTimeout(timer);
 
@@ -104,7 +104,9 @@ const actions = {
     autoLogin(context) {
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('userId');
-        const tokenExpiration = localStorage.getItem('tokenExpiration');
+        const tokenExpiration = localStorage.getItem('tokenexpiration');
+
+        console.log(this.token,this.userId,this.tokenExpiration);
 
         const expiresIn = +tokenExpiration - new Date().getTime();
 
